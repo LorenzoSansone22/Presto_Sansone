@@ -10,13 +10,11 @@
           <a class="nav-link active" aria-current="page" href="{{route('homepage')}}">Home</a>
         </li>
 
-        {{-- INIZIO MENU CATEGORIE --}}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Categorie
           </a>
           <ul class="dropdown-menu">
-            {{-- Cicliamo le categorie direttamente dal database --}}
             @foreach(\App\Models\Category::all() as $category)
               <li>
                 <a class="dropdown-item" href="{{ route('categoryShow', $category) }}">
@@ -28,7 +26,6 @@
             <li><a class="dropdown-item" href="{{ route('announcements.index') }}">Tutti gli annunci</a></li>
           </ul>
         </li>
-        {{-- FINE MENU CATEGORIE --}}
 
         <li class="nav-item">
           <a class="nav-link" href="{{ route('announcements.create') }}">Nuovo Annuncio</a>
@@ -44,6 +41,17 @@
             <a class="nav-link" href="{{ route('register') }}">Registrati</a>
           </li>
         @else
+          @if(Auth::user()->is_revisor)
+            <li class="nav-item">
+              <a class="nav-link btn btn-outline-danger btn-sm position-relative me-3" href="{{ route('revisor.index') }}">
+                Zona Revisore
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                  {{ \App\Models\Announcement::toBeRevisionedCount() }}
+                </span>
+              </a>
+            </li>
+          @endif
+
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Ciao, {{ Auth::user()->name }}

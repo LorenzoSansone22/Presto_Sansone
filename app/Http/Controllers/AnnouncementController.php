@@ -10,8 +10,18 @@ class AnnouncementController extends Controller
 {
     public function index()
     {
-        $announcements = Announcement::latest()->get();
+        $announcements = Announcement::where('is_accepted', true)->latest()->get();
         return view('announcements.index', compact('announcements'));
+    }
+
+    public function categoryShow(Category $category)
+    {
+        $announcements = Announcement::where('category_id', $category->id)
+                                    ->where('is_accepted', true)
+                                    ->latest()
+                                    ->get();
+                                    
+        return view('announcements.categoryShow', compact('category', 'announcements'));
     }
 
     public function show(Announcement $announcement)
@@ -22,11 +32,5 @@ class AnnouncementController extends Controller
     public function create()
     {
         return view('announcements.create');
-    }
-
-    
-    public function categoryShow(Category $category)
-    {
-        return view('announcements.categoryShow', compact('category'));
     }
 }

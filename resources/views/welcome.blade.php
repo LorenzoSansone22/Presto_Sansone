@@ -3,47 +3,29 @@
         <div class="row">
             <div class="col-12">
                 <h1 class="display-1">Presto.it</h1>
-                <p class="lead">Il miglior portale di annunci in Italia</p>
             </div>
         </div>
     </div>
 
-    @if (session()->has('message'))
-        <div class="container mt-3">
-            <div class="alert alert-success">
-                {{ session('message') }}
-            </div>
-        </div>
-    @endif
+    {{-- MESSAGGIO RIMOSSO DA QUI --}}
 
     <div class="container my-5">
-        <div class="row justify-content-center">
-            <div class="col-12 text-center">
-                <h2 class="mb-5">Ultimi Annunci</h2>
-            </div>
-        </div>
         <div class="row">
             @foreach ($announcements as $announcement)
-                <div class="col-12 col-md-4 mb-4 d-flex justify-content-center">
+                <div class="col-12 col-md-4 my-3">
                     <div class="card shadow" style="width: 18rem;">
-                        <img src="https://picsum.photos/300/200" class="card-img-top" alt="Immagine segnaposto">
+                        <img src="https://picsum.photos/200" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">{{ $announcement->title }}</h5>
-                            <p class="card-text">Prezzo: {{ $announcement->price }}€</p>
+                            <p class="card-text">{{ $announcement->description }}</p>
+                            <p class="card-text">{{ $announcement->price }}€</p>
                             
-                            {{-- Controllo se la categoria esiste prima di creare il link --}}
-                            <p class="card-text">
-                                Categoria: 
-                                @if($announcement->category)
-                                    <a href="{{ route('categoryShow', $announcement->category) }}" class="text-decoration-none fw-bold text-info">
-                                        {{ $announcement->category->name }}
-                                    </a>
-                                @else
-                                    <span>Nessuna</span>
-                                @endif
-                            </p>
+                            @if($announcement->category)
+                                <a href="{{ route('categoryShow', ['category' => $announcement->category->id]) }}" class="my-2 border-top pt-2 border-dark card-link shadow btn btn-success">
+                                    Categoria: {{ $announcement->category->name }}
+                                </a>
+                            @endif
                             
-                            <p class="card-text text-muted small">Redattore: {{ $announcement->user->name ?? 'Sconosciuto' }}</p>
                             <a href="{{ route('announcements.show', $announcement) }}" class="btn btn-primary shadow">Visualizza</a>
                         </div>
                     </div>
@@ -51,4 +33,14 @@
             @endforeach
         </div>
     </div>
+
+    <footer class="container-fluid bg-dark text-white py-5 mt-5">
+        <div class="row text-center">
+            <div class="col-12">
+                <p class="lead">Vuoi guadagnare con noi?</p>
+                <p>Diventa un revisore di Presto.it!</p>
+                <a href="{{ route('revisor.form') }}" class="btn btn-warning shadow">Lavora con noi</a>
+            </div>
+        </div>
+    </footer>
 </x-layout>

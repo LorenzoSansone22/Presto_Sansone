@@ -11,22 +11,27 @@ class Announcement extends Model
 {
     use HasFactory;
 
-    
-    protected $fillable = ['title', 'description', 'price', 'category_id', 'user_id']; 
+    protected $fillable = ['title', 'description', 'price', 'category_id', 'user_id'];
 
-    /**
-     * Relazione: L'annuncio appartiene a una Categoria
-     */
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
 
-    /**
-     * Relazione: L'annuncio appartiene a un Utente (l'autore)
-     */
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function setAccepted($value)
+    {
+        $this->is_accepted = $value;
+        $this->save();
+        return true;
+    }
+
+    public static function toBeRevisionedCount()
+    {
+        return Announcement::where('is_accepted', null)->count();
     }
 }
