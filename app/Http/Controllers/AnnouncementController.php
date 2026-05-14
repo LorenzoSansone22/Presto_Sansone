@@ -2,32 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Announcement;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Category;
 
 class AnnouncementController extends Controller
 {
-    
+    public function index()
+    {
+        $announcements = Announcement::latest()->get();
+        return view('announcements.index', compact('announcements'));
+    }
+
+    public function show(Announcement $announcement)
+    {
+        return view('announcements.show', compact('announcement'));
+    }
+
     public function create()
     {
-    
-        $categories = Category::all();
-        return view('announcements.create', compact('categories'));
+        return view('announcements.create');
     }
 
     
-    public function store(Request $request)
+    public function categoryShow(Category $category)
     {
-        
-        Auth::user()->announcements()->create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'price' => $request->price,
-            'category_id' => $request->category_id, 
-        ]);
-
-        return redirect()->route('homepage')->with('message', 'Annuncio inserito con successo!');
+        return view('announcements.categoryShow', compact('category'));
     }
 }

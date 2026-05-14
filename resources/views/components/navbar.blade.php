@@ -9,6 +9,27 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{{route('homepage')}}">Home</a>
         </li>
+
+        {{-- INIZIO MENU CATEGORIE --}}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Categorie
+          </a>
+          <ul class="dropdown-menu">
+            {{-- Cicliamo le categorie direttamente dal database --}}
+            @foreach(\App\Models\Category::all() as $category)
+              <li>
+                <a class="dropdown-item" href="{{ route('categoryShow', $category) }}">
+                  {{ $category->name }}
+                </a>
+              </li>
+            @endforeach
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{{ route('announcements.index') }}">Tutti gli annunci</a></li>
+          </ul>
+        </li>
+        {{-- FINE MENU CATEGORIE --}}
+
         <li class="nav-item">
           <a class="nav-link" href="{{ route('announcements.create') }}">Nuovo Annuncio</a>
         </li>
@@ -16,7 +37,6 @@
 
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         @guest
-          {{-- Quello che vede un utente NON loggato --}}
           <li class="nav-item">
             <a class="nav-link" href="{{ route('login') }}">Accedi</a>
           </li>
@@ -24,7 +44,6 @@
             <a class="nav-link" href="{{ route('register') }}">Registrati</a>
           </li>
         @else
-          {{-- Quello che vede un utente LOGGATO --}}
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Ciao, {{ Auth::user()->name }}
