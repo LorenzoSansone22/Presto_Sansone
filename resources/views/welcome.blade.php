@@ -7,8 +7,6 @@
         </div>
     </div>
 
-    {{-- MESSAGGIO RIMOSSO DA QUI --}}
-
     <div class="container my-5">
         <div class="row">
             @foreach ($announcements as $announcement)
@@ -22,11 +20,11 @@
                             
                             @if($announcement->category)
                                 <a href="{{ route('categoryShow', ['category' => $announcement->category->id]) }}" class="my-2 border-top pt-2 border-dark card-link shadow btn btn-success">
-                                    Categoria: {{ $announcement->category->name }}
+                                    {{ __('ui.category') }}: {{ __("ui.{$announcement->category->name}") }}
                                 </a>
                             @endif
                             
-                            <a href="{{ route('announcements.show', $announcement) }}" class="btn btn-primary shadow">Visualizza</a>
+                            <a href="{{ route('announcements.show', $announcement) }}" class="btn btn-primary shadow">{{ __('ui.view') }}</a>
                         </div>
                     </div>
                 </div>
@@ -37,9 +35,9 @@
     <footer class="container-fluid bg-dark text-white py-5 mt-5">
         <div class="row text-center">
             <div class="col-12">
-                <p class="lead">Vuoi guadagnare con noi?</p>
-                <p>Diventa un revisore di Presto.it!</p>
-                <a href="{{ route('revisor.form') }}" class="btn btn-warning shadow">Lavora con noi</a>
+                <p class="lead">{{ __('ui.earnWithUs') }}</p>
+                <p>{{ __('ui.becomeRevisor') }}</p>
+                <a href="{{ route('revisor.form') }}" class="btn btn-warning shadow">{{ __('ui.workWithUs') }}</a>
             </div>
         </div>
     </footer>

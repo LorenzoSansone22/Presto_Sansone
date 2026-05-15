@@ -39,4 +39,10 @@ class PublicController extends Controller
         
         return redirect()->route('homepage')->with('message', 'Complimenti! Hai richiesto di diventare revisore correttamente.');
     }
+
+    public function setLocale($lang)
+    {
+        session()->put('locale', $lang);
+        return redirect()->back();
+    }
 }

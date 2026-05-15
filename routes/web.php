@@ -12,10 +12,8 @@ Route::get('/categoria/{category}', [AnnouncementController::class, 'categorySho
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/nuovo/annuncio', [AnnouncementController::class, 'create'])->name('announcements.create');
-    
     Route::get('/lavora-con-noi', [PublicController::class, 'revisorForm'])->name('revisor.form');
     Route::post('/diventa/revisore', [PublicController::class, 'becomeRevisor'])->name('become.revisor');
-    
     Route::get('/rendi/revisore/{user}', [RevisorController::class, 'makeRevisor'])->name('make.revisor');
 
     Route::middleware(['isRevisor'])->group(function () {
@@ -26,5 +24,5 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
-
 Route::get('/search/announcements', [PublicController::class, 'searchAnnouncements'])->name('announcements.search');
+Route::post('/locale/{lang}', [PublicController::class, 'setLocale'])->name('setLocale');
