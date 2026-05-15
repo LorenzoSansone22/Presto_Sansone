@@ -25,3 +25,6 @@ Route::middleware(['auth'])->group(function () {
         Route::patch('/revisore/annulla', [RevisorController::class, 'undoLastDecision'])->name('revisor.undo');
     });
 });
+
+
+Route::get('/search/announcements', [PublicController::class, 'searchAnnouncements'])->name('announcements.search');

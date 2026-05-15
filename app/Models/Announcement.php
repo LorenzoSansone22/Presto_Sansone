@@ -2,25 +2,23 @@
 
 namespace App\Models;
 
-use App\Models\User;
-use App\Models\Category;
+use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Announcement extends Model
 {
-    use HasFactory;
+    use HasFactory, Searchable;
 
-    protected $fillable = ['title', 'description', 'price', 'category_id', 'user_id'];
+    protected $fillable = ['title', 'description', 'price', 'category_id', 'user_id', 'is_accepted'];
 
-    public function category()
+    public function toSearchableArray()
     {
-        return $this->belongsTo(Category::class);
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
+        return [
+            'id'          => (int) $this->id,
+            'title'       => $this->title,
+            'description' => $this->description,
+        ];
     }
 
     public function setAccepted($value)
@@ -33,5 +31,15 @@ class Announcement extends Model
     public static function toBeRevisionedCount()
     {
         return Announcement::where('is_accepted', null)->count();
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

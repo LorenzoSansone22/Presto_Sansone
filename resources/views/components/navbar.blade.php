@@ -32,6 +32,11 @@
         </li>
       </ul>
 
+      <form action="{{ route('announcements.search') }}" method="GET" class="d-flex mx-auto" role="search">
+        <input name="query" class="form-control me-2" type="search" placeholder="Cerca annunci..." aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Cerca</button>
+      </form>
+
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         @guest
           <li class="nav-item">

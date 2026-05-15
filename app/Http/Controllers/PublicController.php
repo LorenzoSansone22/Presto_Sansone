@@ -16,6 +16,14 @@ class PublicController extends Controller
         return view('welcome', compact('announcements'));
     }
 
+    public function searchAnnouncements(Request $request)
+    {
+        $query = $request->input('query');
+        $announcements = Announcement::search($query)->where('is_accepted', true)->paginate(10);
+
+        return view('announcements.index', compact('announcements', 'query'));
+    }
+
     public function revisorForm()
     {
         return view('revisor.form');
