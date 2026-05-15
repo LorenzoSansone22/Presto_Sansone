@@ -75,6 +75,10 @@
                 </span>
               </a>
             </li>
+          @else
+            <li class="nav-item me-3">
+              <a class="nav-link text-warning fw-bold" href="{{ route('revisor.form') }}">{{ __('ui.workWithUs') }}</a>
+            </li>
           @endif
 
           <li class="nav-item dropdown">

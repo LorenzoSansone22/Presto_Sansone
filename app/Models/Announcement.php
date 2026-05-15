@@ -15,7 +15,7 @@ class Announcement extends Model
     public function toSearchableArray()
     {
         return [
-            'id'          => (int) $this->id,
+            'id'          => $this->id,
             'title'       => $this->title,
             'description' => $this->description,
         ];
