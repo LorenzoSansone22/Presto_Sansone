@@ -11,12 +11,32 @@
         <div class="row justify-content-center">
             <div class="col-12 col-md-8 shadow rounded p-5 bg-light">
                 <div class="row">
-                    {{-- Parte sinistra: Immagine --}}
                     <div class="col-12 col-md-6">
-                        <img src="https://picsum.photos/600/400" class="img-fluid rounded shadow" alt="Immagine segnaposto">
+                        @if ($announcement->images->count() > 0)
+                            <div id="showCarousel" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                    @foreach ($announcement->images as $key => $image)
+                                        <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                            <img src="{{ Storage::url($image->path) }}" class="img-fluid rounded shadow w-100" alt="Immagine annuncio" style="max-height: 400px; object-fit: cover;">
+                                        </div>
+                                    @endforeach
+                                </div>
+                                @if ($announcement->images->count() > 1)
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#showCarousel" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#showCarousel" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                @endif
+                            </div>
+                        @else
+                            <img src="https://picsum.photos/600/400" class="img-fluid rounded shadow" alt="Immagine di default">
+                        @endif
                     </div>
 
-                    {{-- Parte destra: Dati --}}
                     <div class="col-12 col-md-6">
                         <h2 class="display-5">{{ $announcement->title }}</h2>
                         <h4 class="text-muted mt-3">Prezzo: {{ $announcement->price }}€</h4>

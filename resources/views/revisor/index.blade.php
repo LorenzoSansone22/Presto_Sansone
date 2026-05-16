@@ -32,7 +32,31 @@
             <div class="row justify-content-center">
                 <div class="col-12 col-md-8">
                     <div class="card shadow">
-                        <img src="https://picsum.photos/400/200" class="card-img-top" alt="...">
+                        
+                        @if ($announcement_to_check->images->count() > 0)
+                            <div id="revisorCarousel" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                    @foreach ($announcement_to_check->images as $key => $image)
+                                        <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                            <img src="{{ Storage::url($image->path) }}" class="d-block w-100 rounded-top" alt="Immagine annuncio" style="max-height: 400px; object-fit: cover;">
+                                        </div>
+                                    @endforeach
+                                </div>
+                                @if ($announcement_to_check->images->count() > 1)
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#revisorCarousel" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#revisorCarousel" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                @endif
+                            </div>
+                        @else
+                            <img src="https://picsum.photos/400/200" class="card-img-top" alt="Immagine di default">
+                        @endif
+
                         <div class="card-body text-center">
                             <h5 class="card-title">Titolo: {{ $announcement_to_check->title }}</h5>
                             <p class="card-text">Descrizione: {{ $announcement_to_check->description }}</p>

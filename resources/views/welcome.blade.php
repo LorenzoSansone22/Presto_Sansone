@@ -11,22 +11,7 @@
         <div class="row">
             @foreach ($announcements as $announcement)
                 <div class="col-12 col-md-4 my-3">
-                    <div class="card shadow" style="width: 18rem;">
-                        <img src="https://picsum.photos/200" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $announcement->title }}</h5>
-                            <p class="card-text">{{ $announcement->description }}</p>
-                            <p class="card-text">{{ $announcement->price }}€</p>
-                            
-                            @if($announcement->category)
-                                <a href="{{ route('categoryShow', ['category' => $announcement->category->id]) }}" class="my-2 border-top pt-2 border-dark card-link shadow btn btn-success">
-                                    {{ __('ui.category') }}: {{ __("ui.{$announcement->category->name}") }}
-                                </a>
-                            @endif
-                            
-                            <a href="{{ route('announcements.show', $announcement) }}" class="btn btn-primary shadow">{{ __('ui.view') }}</a>
-                        </div>
-                    </div>
+                    <x-card :announcement="$announcement" />
                 </div>
             @endforeach
         </div>

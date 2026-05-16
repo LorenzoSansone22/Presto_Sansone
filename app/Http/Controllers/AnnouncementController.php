@@ -10,7 +10,7 @@ class AnnouncementController extends Controller
 {
     public function index()
     {
-        $announcements = Announcement::where('is_accepted', true)->latest()->get();
+        $announcements = Announcement::where('is_accepted', true)->with(['images'])->latest()->get();
         return view('announcements.index', compact('announcements'));
     }
 
@@ -18,6 +18,7 @@ class AnnouncementController extends Controller
     {
         $announcements = Announcement::where('category_id', $category->id)
                                     ->where('is_accepted', true)
+                                    ->with(['images'])
                                     ->latest()
                                     ->get();
                                     

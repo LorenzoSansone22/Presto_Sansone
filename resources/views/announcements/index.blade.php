@@ -11,28 +11,7 @@
         <div class="row">
             @forelse ($announcements as $announcement)
                 <div class="col-12 col-md-4 mb-4 d-flex justify-content-center">
-                    <div class="card shadow" style="width: 18rem;">
-                        <img src="https://picsum.photos/300/200" class="card-img-top" alt="Immagine segnaposto">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $announcement->title }}</h5>
-                            <p class="card-text">Prezzo: {{ $announcement->price }}€</p>
-                            
-                            {{-- Controllo se la categoria esiste prima di creare il link --}}
-                            <p class="card-text">
-                                Categoria: 
-                                @if($announcement->category)
-                                    <a href="{{ route('categoryShow', $announcement->category) }}" class="text-decoration-none fw-bold text-info">
-                                        {{ $announcement->category->name }}
-                                    </a>
-                                @else
-                                    <span>Nessuna</span>
-                                @endif
-                            </p>
-
-                            <p class="card-text text-muted small">Redattore: {{ $announcement->user->name ?? 'Sconosciuto' }}</p>
-                            <a href="{{ route('announcements.show', $announcement) }}" class="btn btn-primary shadow">Visualizza</a>
-                        </div>
-                    </div>
+                    <x-card :announcement="$announcement" />
                 </div>
             @empty
                 <div class="col-12 text-center">
