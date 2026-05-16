@@ -38,7 +38,7 @@
                                 <div class="carousel-inner">
                                     @foreach ($announcement_to_check->images as $key => $image)
                                         <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                                            <img src="{{ Storage::url($image->path) }}" class="d-block w-100 rounded-top" alt="Immagine annuncio" style="max-height: 400px; object-fit: cover;">
+                                            <img src="{{ $image->getUrl(300, 300) }}" class="d-block w-100 rounded-top" alt="Immagine annuncio" style="max-height: 400px; object-fit: cover;">
                                         </div>
                                     @endforeach
                                 </div>

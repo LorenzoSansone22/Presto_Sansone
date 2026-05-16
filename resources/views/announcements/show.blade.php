@@ -17,7 +17,7 @@
                                 <div class="carousel-inner">
                                     @foreach ($announcement->images as $key => $image)
                                         <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                                            <img src="{{ Storage::url($image->path) }}" class="img-fluid rounded shadow w-100" alt="Immagine annuncio" style="max-height: 400px; object-fit: cover;">
+                                            <img src="{{ $image->getUrl(300, 300) }}" class="img-fluid rounded shadow w-100" alt="Immagine annuncio" style="max-height: 400px; object-fit: cover;">
                                         </div>
                                     @endforeach
                                 </div>

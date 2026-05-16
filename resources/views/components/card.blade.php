@@ -1,5 +1,5 @@
 <div class="card shadow h-100">
-    <img src="{{ $announcement->images->isNotEmpty() ? Storage::url($announcement->images->first()->path) : 'https://picsum.photos/400/300' }}" class="card-img-top" alt="Immagine annuncio">
+    <img src="{{ $announcement->images->isNotEmpty() ? $announcement->images->first()->getUrl(300, 300) : 'https://picsum.photos/400/300' }}" class="card-img-top" alt="Immagine annuncio">
     
     <div class="card-body d-flex flex-column">
         <h5 class="card-title">{{ $announcement->title }}</h5>
