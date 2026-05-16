@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Jobs\ResizeImage;
 use App\Models\Announcement;
 use Livewire\WithFileUploads;
+use App\Jobs\RemoveFaces;
 use App\Jobs\GoogleVisionSafeSearch;
 use App\Jobs\GoogleVisionLabelImage;
 use Illuminate\Support\Facades\Auth;
@@ -76,9 +77,12 @@ class CreateAnnouncement extends Component
                     'path' => $image->store($newFileName, 'public')
                 ]);
 
-                dispatch(new ResizeImage($newImage->path, 300, 300));
-                dispatch(new GoogleVisionSafeSearch($newImage->id));
-                dispatch(new GoogleVisionLabelImage($newImage->id));
+                // CONCATENAZIONE DEI JOB CON WITHCHAIN (Come richiesto dalla guida US8)
+                ResizeImage::withChain([
+                    new RemoveFaces($newImage->id),
+                    new GoogleVisionSafeSearch($newImage->id),
+                    new GoogleVisionLabelImage($newImage->id),
+                ])->dispatch($newImage->path, 300, 300);
             }
 
             File::deleteDirectory(storage_path('/app/livewire-tmp'));
