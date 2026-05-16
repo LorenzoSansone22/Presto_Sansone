@@ -34,20 +34,44 @@
                     <div class="card shadow">
                         
                         @if ($announcement_to_check->images->count() > 0)
-                            <div id="revisorCarousel" class="carousel slide" data-bs-ride="carousel">
+                            <div id="revisorCarousel" class="carousel slide" data-bs-interval="false">
                                 <div class="carousel-inner">
                                     @foreach ($announcement_to_check->images as $key => $image)
                                         <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                                            <img src="{{ $image->getUrl(300, 300) }}" class="d-block w-100 rounded-top" alt="Immagine annuncio" style="max-height: 400px; object-fit: cover;">
+                                            <div class="row p-3 align-items-center">
+                                                <div class="col-12 col-md-6 text-center">
+                                                    <img src="{{ $image->getUrl(300, 300) }}" class="img-fluid rounded shadow" alt="Immagine annuncio">
+                                                </div>
+                                                <div class="col-12 col-md-6 mt-3 mt-md-0">
+                                                    <h5 class="custom-card-title text-center mb-3">Revisione Immagine {{ $key + 1 }}</h5>
+                                                    <div class="card-body pt-0 ps-3">
+                                                        <p class="mb-1"><strong>Adulti:</strong> <span class="{{ $image->adult }}"></span></p>
+                                                        <p class="mb-1"><strong>Satira:</strong> <span class="{{ $image->spoof }}"></span></p>
+                                                        <p class="mb-1"><strong>Medicina:</strong> <span class="{{ $image->medical }}"></span></p>
+                                                        <p class="mb-1"><strong>Violenza:</strong> <span class="{{ $image->violence }}"></span></p>
+                                                        <p class="mb-1"><strong>Ammiccante:</strong> <span class="{{ $image->racy }}"></span></p>
+                                                    </div>
+                                                    <div class="p-3 border-top mt-2">
+                                                        <h6 class="mb-2">Tag rilevati:</h6>
+                                                        @if ($image->labels)
+                                                            @foreach ($image->labels as $label)
+                                                                <span class="badge bg-secondary me-1 mb-1">{{ $label }}</span>
+                                                            @endforeach
+                                                        @else
+                                                            <p class="text-muted small mb-0">Nessun tag calcolato</p>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     @endforeach
                                 </div>
                                 @if ($announcement_to_check->images->count() > 1)
-                                    <button class="carousel-control-prev" type="button" data-bs-target="#revisorCarousel" data-bs-slide="prev">
+                                    <button class="carousel-control-prev bg-dark bg-opacity-25 rounded-start" type="button" data-bs-target="#revisorCarousel" data-bs-slide="prev">
                                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                         <span class="visually-hidden">Previous</span>
                                     </button>
-                                    <button class="carousel-control-next" type="button" data-bs-target="#revisorCarousel" data-bs-slide="next">
+                                    <button class="carousel-control-next bg-dark bg-opacity-25 rounded-end" type="button" data-bs-target="#revisorCarousel" data-bs-slide="next">
                                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                         <span class="visually-hidden">Next</span>
                                     </button>
@@ -57,7 +81,7 @@
                             <img src="https://picsum.photos/400/200" class="card-img-top" alt="Immagine di default">
                         @endif
 
-                        <div class="card-body text-center">
+                        <div class="card-body text-center border-top">
                             <h5 class="card-title">Titolo: {{ $announcement_to_check->title }}</h5>
                             <p class="card-text">Descrizione: {{ $announcement_to_check->description }}</p>
                             <p class="card-text">Prezzo: {{ $announcement_to_check->price }}€</p>
